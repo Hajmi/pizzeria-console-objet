@@ -14,7 +14,7 @@ public class Pizza {
 	public int id;
 	public String code;
 	public String designation;
-	public int prix;
+	public double prix;
 	public static int count = 0;
 	
 	/**
@@ -24,9 +24,9 @@ public class Pizza {
 	 * @param designation c'est le nom de la pizza
 	 * @param prix désigne le prix de la pizza
 	 */
-	public Pizza(int id, String code, String designation, int prix) {
+	public Pizza(String code, String designation, double prix) {
 		
-		this.id = ++count;
+		this.id = count++;
 		this.code = code;
 		this.designation = designation;
 		this.prix = prix;
@@ -57,7 +57,7 @@ public class Pizza {
 	 * @param code est le code de la pizza
 	 */
 	public void setCode(String code) {
-		this.code = code;
+		this.code = code.toUpperCase();
 	}
 	/**
 	 * Retourne la designation de la pizza
@@ -77,17 +77,33 @@ public class Pizza {
 	 * Retourne le prix de la pizza
 	 * @return retourne le prix de la pizza
 	 */
-	public int getPrix() {
+	public double getPrix() {
 		return prix;
 	}
 	/**
 	 * Met à jour le prix de la pizza
 	 * @param prix est le prix de la pizza
 	 */
-	public void setPrix(int prix) {
+	public void setPrix(double prix) {
 		this.prix = prix;
 	}
 	
+	/*public Pizza[] ajoutPizza (Pizza[] pizzas, String OldCode, String code, String nom, int prix ) {
+		
+		for (Pizza pizza : pizzas) {
+			if (pizza.code.equals(OldCode.toUpperCase())){
+				
+				pizza.setCode(code);
+				pizza.setDesignation(nom);
+				pizza.setPrix(prix);
+			}
+		}
+		return pizza;
+	}*/
+	
+	public String toString () {
+		return " "+this.code+" -> "+this.designation+" ("+this.prix+"€)";
+	}
 	
 
 }
