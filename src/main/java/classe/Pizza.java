@@ -88,18 +88,6 @@ public class Pizza {
 		this.prix = prix;
 	}
 	
-	/*public Pizza[] ajoutPizza (Pizza[] pizzas, String OldCode, String code, String nom, int prix ) {
-		
-		for (Pizza pizza : pizzas) {
-			if (pizza.code.equals(OldCode.toUpperCase())){
-				
-				pizza.setCode(code);
-				pizza.setDesignation(nom);
-				pizza.setPrix(prix);
-			}
-		}
-		return pizza;
-	}*/
 	
 	public String toString () {
 		return " "+this.code+" -> "+this.designation+" ("+this.prix+"€)";
