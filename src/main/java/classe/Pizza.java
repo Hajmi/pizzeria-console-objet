@@ -32,6 +32,12 @@ public class Pizza {
 		this.prix = prix;
 	}
 	/**
+	 * Constructeur vide
+	 */
+	public Pizza() {
+		
+	}
+	/**
 	 * Retourne l'identifiant de la pizza désignée
 	 * @return l'identifiant de chaque pizza
 	 */
