@@ -66,9 +66,7 @@ public class PizzeriaAdminConsoleApp {
 				System.out.println("Veuillez choisir le code de la pizza à modifier.");
 				//sc.nextLine();
 				choixCode = sc.nextLine();
-
-				for (Pizza pizza : pizzas) {
-					if (pizza.code.equals(choixCode.toUpperCase())) {
+				if (dao.isPizzaExists(choixCode)) {
 						System.out.println("Veuillez saisir le nouveau  code : \r\n");
 						String newCodePizza = "";
 						String newNomPizza = "";
@@ -82,10 +80,9 @@ public class PizzeriaAdminConsoleApp {
 						newPrixPizza = sc.nextDouble();
 						Pizza newPizza = new Pizza(newCodePizza,newNomPizza,newPrixPizza);
 						dao.updatePizza(choixCode.toUpperCase(), newPizza);
-						
-					} else
-						continue;
 				}
+				else
+					System.out.println("Cette pizza n'existe pas");
 			}
 			// choix 4 : supprimer une pizza en passant par son code
 			if (choix == 4) {

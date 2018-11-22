@@ -18,6 +18,7 @@ public class PizzaMemDao implements IPizzaDao{
 		// TODO Auto-generated method stub
 		if (isPizzaExists(codePizza)) {
 			Pizza pizzaUpdate = findPizzaByCode(codePizza);
+			//pizzas[pizzaUpdate.getId()]= pizza;
 			pizzaUpdate.setCode(pizza.getCode());
 			pizzaUpdate.setDesignation(pizza.getDesignation());
 			pizzaUpdate.setPrix(pizza.getPrix());
