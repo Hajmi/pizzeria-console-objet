@@ -51,10 +51,12 @@ public class PizzaMemDao implements IPizzaDao{
 		// TODO Auto-generated method stub
 		if (!isPizzaExists(pizza.getCode())) {
 			Pizza[] pizzasTemp = new Pizza[(pizzas.length) + 1];
-			pizzasTemp = pizzas;
+			for (int i = 0; i<pizzas.length; i++) {
+				pizzasTemp[i] = pizzas[i];
+			}
 			pizzas = new Pizza[pizzasTemp.length];
 			pizzas = pizzasTemp;
-			pizzas[(pizzas.length) - 1] = pizza;
+			pizzas[(pizzas.length)-1] = pizza;
 		}
 		else {
 			System.out.println("Cette pizza existe");
@@ -65,7 +67,7 @@ public class PizzaMemDao implements IPizzaDao{
 		// TODO Auto-generated method stub
 		int i = 0;
 		Pizza[] pizzasTemp = new Pizza[pizzas.length];
-		boolean codeBon = false;
+		boolean codeBon = true;
 		if (isPizzaExists(codePizza)) {
 			pizzasTemp = new Pizza[(pizzas.length) - 1];	
 		}

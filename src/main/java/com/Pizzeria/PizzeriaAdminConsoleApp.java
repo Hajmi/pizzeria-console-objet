@@ -52,14 +52,13 @@ public class PizzeriaAdminConsoleApp {
 				nomPizza = sc.nextLine();
 				System.out.println("Veuillez saisir le prix : \r\n");
 				prixPizza = sc.nextDouble();
-				Pizza nouvellePizza = new Pizza(codePizza, nomPizza, prixPizza);
+				Pizza nouvellePizza = new Pizza(codePizza.toUpperCase(), nomPizza, prixPizza);
 				dao.addPizza(nouvellePizza);
 				System.out.println("");
 			}
 			// choix 3 : modifier une pizza en passant par son code
 			if (choix == 3) {
 				sc.nextLine();
-				boolean codeBon = false;
 				String choixCode = "";
 				System.out.println("Mise à jour d'une pizza\r\n");
 				System.out.println("Liste des pizzas\r\n");
@@ -70,12 +69,10 @@ public class PizzeriaAdminConsoleApp {
 
 				for (Pizza pizza : pizzas) {
 					if (pizza.code.equals(choixCode.toUpperCase())) {
-						codeBon = true;
 						System.out.println("Veuillez saisir le nouveau  code : \r\n");
 						String newCodePizza = "";
 						String newNomPizza = "";
 						double newPrixPizza = 0.0;
-						// Scanner scan = new Scanner(System.in);
 						newCodePizza = sc.nextLine();
 						// sc.nextLine();
 						System.out.println("Veuillez saisir le nouveau nom : \r\n");
@@ -85,50 +82,23 @@ public class PizzeriaAdminConsoleApp {
 						newPrixPizza = sc.nextDouble();
 						Pizza newPizza = new Pizza(newCodePizza,newNomPizza,newPrixPizza);
 						dao.updatePizza(choixCode.toUpperCase(), newPizza);
-						//pizza.setCode(newCodePizza);
-						//pizza.setDesignation(newNomPizza);
-						//pizza.setPrix(newPrixPizza);
-
+						
 					} else
 						continue;
-
 				}
-				if (codeBon == false) {
-					System.out.println("Ce code n'existe pas !\r\n");
-				}
-
 			}
 			// choix 4 : supprimer une pizza en passant par son code
 			if (choix == 4) {
 				sc.nextLine();
-				boolean codeBon = true;
+				//boolean codeBon = true;
 				System.out.println("Suppression d'une pizza\r\n");
 				String choixCode = "";
 				System.out.println("Liste des pizzas\r\n");
-				for (Pizza pizza : pizzas) {
-					System.out.println(pizza.toString());
-				}
+				dao.afficheTableau();
 				System.out.println("Veuillez choisir le code de la pizza à supprimer.");
-				sc.nextLine();
+				//sc.nextLine();
 				choixCode = sc.nextLine();
-				int i = 0;
-				Pizza[] pizzasTemp = new Pizza[pizzas.length];
-				for (Pizza pizza : pizzas) {
-					if (pizza.code.equals(choixCode.toUpperCase())) {
-						pizzasTemp = new Pizza[(pizzas.length) - 1];
-					} 
-				}
-				for (Pizza pizza : pizzas) {
-					if (!pizza.code.equals(choixCode.toUpperCase())) {
-						pizzasTemp[i] = pizza;
-						i++;
-					}
-					else
-						codeBon = false;
-				}
-				if (codeBon == true)
-					System.out.println("le code n'est pas bon");
-				pizzas = pizzasTemp;
+				dao.deletePizza(choixCode);
 			}
 			
 			if (choix == 99) {
