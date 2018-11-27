@@ -6,6 +6,10 @@ import java.util.List;
 import java.util.Comparator;
 
 import classe.Pizza;
+import fr.pizzeria.exception.DeletePizzaException;
+import fr.pizzeria.exception.SavePizzaException;
+import fr.pizzeria.exception.StockageException;
+import fr.pizzeria.exception.UpdatePizzaException;
 /**
  * 
  * @author Samir Benakcha
@@ -43,15 +47,27 @@ public class PizzaMemDao implements IPizzaDao{
 	/**
 	 * Modifier une pizza 
 	 */
-	public void updatePizza(String codePizza, Pizza pizza) {
+	public void updatePizza(String codePizza, Pizza pizza) throws UpdatePizzaException {
 		// TODO Auto-generated method stub
-		if (isPizzaExists(codePizza)) {
+		boolean codeB = false;
+		
+		try {
+			pizza.dataController();
+			codeB = true;
+		}
+		catch (StockageException e) {
+			String msg = "MODIFICATION DE LA PIZZA => " + codePizza + "\r\n";
+			msg += "La pizza à modifier n'existe pas \r\n"+e.getMessage();
+			throw new UpdatePizzaException(msg);
+		}
+		
+		if (isPizzaExists(codePizza)==true && codeB == true) {
 			Pizza pizzaUpdate = findPizzaByCode(codePizza);
 			pizzaUpdate.setCode(pizza.getCode());
 			pizzaUpdate.setDesignation(pizza.getDesignation());
 			pizzaUpdate.setPrix(pizza.getPrix());
-		}else {
-				System.out.println("Ce code n'existe pas");
+			System.out.println("Mise à jour réussie");
+
 		}
 	}
 	/**
@@ -82,26 +98,44 @@ public class PizzaMemDao implements IPizzaDao{
 	/**
 	 * Ajout d'une pizza 
 	 */
-	public void addPizza(Pizza pizza) {
+	public void addPizza(Pizza pizza) throws SavePizzaException {
 		// TODO Auto-generated method stub
-		if (!isPizzaExists(pizza.getCode())) {
-			pizzas.add(pizza);
-		}
-		else {
-			System.out.println("Cette pizza existe");
-		}
+			boolean controleOk = false;
+			try {
+				pizza.dataController();
+				controleOk = true;
+				//pizzas.add(pizza);
+			}
 		
-	}
+			catch (StockageException e) 
+			{
+				System.err.println(e.getMessage());
+			}
+
+			if (isPizzaExists(pizza.code)) {
+				throw new SavePizzaException("Cette pizza existe déja");
+			}
+			else if (!isPizzaExists(pizza.code) && (controleOk == true))  {
+				pizzas.add(pizza);
+				System.err.println("Pizza ajoutée");
+			}
+			
+		}
+	
+	
 	/**
 	 * Suppression d'une pizza en passant par le code
 	 */
-	public void deletePizza(String codePizza) {
+	public void deletePizza(String codePizza) throws DeletePizzaException {
 		// TODO Auto-generated method stub
-		if (isPizzaExists(codePizza)) {
+		boolean codeB = isPizzaExists(codePizza);
+		
+		if(codeB) {
 			pizzas.remove(findPizzaByCode(codePizza));
+			System.out.println("Pizza supprimée");
 		}
 		else {
-		System.out.println("Cette pizza n'existe pas");
+			throw new DeletePizzaException("cette pizza n'existe pas\r\n");//
 		}
 	}
 	/**

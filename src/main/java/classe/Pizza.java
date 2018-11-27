@@ -1,4 +1,7 @@
 package classe;
+
+import fr.pizzeria.exception.StockageException;
+
 /**
  * 
  * @author Samir BENAKCHA
@@ -16,6 +19,11 @@ public class Pizza {
 	public String designation;
 	public double prix;
 	public static int count = 0;
+	
+	public static final int PRIX_MAX = 100;
+	public static final int PRIX_MIN = 1;
+	public static final int LONG_CODE = 3;
+	public static final int MAX_NAME = 15;
 	
 	/**
 	 * Mise en place d'un constructeur pour la classe Pizza
@@ -97,6 +105,27 @@ public class Pizza {
 	
 	public String toString () {
 		return " "+this.code+" -> "+this.designation+" ("+this.prix+"€)";
+	}
+	
+
+	
+	public void dataController() throws StockageException {
+		
+		String message = "";
+		
+		if( code == null|| code.trim().length() != LONG_CODE ) {
+			message += "Veuillez saisir un autre code avec 3 caractères svp. \r\n";
+		}
+		if(designation.trim().length() < 1 || designation == null || designation.trim().length() > MAX_NAME) {
+			message += "Veuillez saisir un autre nom, 20 charactères max. \r\n";
+		}
+		if(prix < PRIX_MIN || prix > PRIX_MAX) {
+			message += "Veuillez saisir un prix compris entre "+PRIX_MIN+" et "+PRIX_MAX+"\r\n";
+		}
+		 
+		if (message.trim().length() > 0) {
+			throw new StockageException(message);
+		}
 	}
 	
 
