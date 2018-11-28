@@ -12,7 +12,9 @@ import classe.Pizza;
 import dao.PizzaMemDao;
 import fr.pizzeria.exception.DeletePizzaException;
 import fr.pizzeria.exception.SavePizzaException;
+import fr.pizzeria.exception.StockageException;
 import fr.pizzeria.exception.UpdatePizzaException;
+import fr.pizzeria.model.CategoriePizzaEnum;
 
 public class PizzeriaAdminConsoleApp {
 	/**
@@ -44,7 +46,7 @@ public class PizzeriaAdminConsoleApp {
 			}
 			// choix 2 : ajouter une nouvelle pizza
 			else if (choix == 2) {
-				try {
+				
 					sc.nextLine();
 					System.out.println("Ajout d'une nouvelle pizza\r\n");
 					System.out.println("Veuillez saisir le code : \r\n");
@@ -56,17 +58,35 @@ public class PizzeriaAdminConsoleApp {
 					nomPizza = sc.nextLine();
 					System.out.println("Veuillez saisir le prix : \r\n");
 					prixPizza = sc.nextDouble();
-					Pizza nouvellePizza = new Pizza(codePizza.toUpperCase(), nomPizza, prixPizza);
+					System.out.println("Veuillez saisir la catégorie : \r\n");
+					sc.nextLine();
+				try {
+					CategoriePizzaEnum categoriePizza = CategoriePizzaEnum.valueOf(sc.nextLine().toUpperCase());
+					Pizza nouvellePizza = new Pizza(codePizza.toUpperCase(), nomPizza, prixPizza, categoriePizza);
+					nouvellePizza.dataController();
 					dao.addPizza(nouvellePizza);
-				} catch (SavePizzaException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					System.out.println(e.getMessage());
-				} 
-				finally 
-				{
-				menu();
-				}
+					}
+				catch(StockageException e1) {
+					e1.printStackTrace();
+					System.out.println(e1.getMessage());
+					
+					} 
+				catch (IllegalArgumentException i) {
+					//i.printStackTrace();
+					System.out.println(i.getMessage());
+					Pizza nouvellePizza = new Pizza(codePizza.toUpperCase(), nomPizza, prixPizza, CategoriePizzaEnum.AUTRE);
+					try {
+						dao.addPizza(nouvellePizza);
+					} catch (SavePizzaException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						System.out.println(e.getMessage());
+					}
+					}
+					finally 
+					{
+						menu();
+					}
 			}
 			// choix 3 : modifier une pizza en passant par son code
 			else if (choix == 3) {
@@ -87,7 +107,9 @@ public class PizzeriaAdminConsoleApp {
 					newNomPizza = sc.nextLine();
 					System.out.println("Veuillez saisir le nouveauc prix : \r\n");
 					newPrixPizza = sc.nextDouble();
-					Pizza newPizza = new Pizza(newCodePizza,newNomPizza,newPrixPizza);
+					System.out.println("Veuillez saisir la categorie : \r\n");
+					CategoriePizzaEnum categoriePizza = CategoriePizzaEnum.valueOf(sc.nextLine().toUpperCase());
+					Pizza newPizza = new Pizza(newCodePizza,newNomPizza,newPrixPizza, categoriePizza);
 					dao.updatePizza(choixCode.toUpperCase(), newPizza);	
 					}
 				

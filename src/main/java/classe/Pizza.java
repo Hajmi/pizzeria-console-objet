@@ -1,6 +1,7 @@
 package classe;
 
 import fr.pizzeria.exception.StockageException;
+import fr.pizzeria.model.CategoriePizzaEnum;
 
 /**
  * 
@@ -19,7 +20,9 @@ public class Pizza {
 	public String designation;
 	public double prix;
 	public static int count = 0;
+	public CategoriePizzaEnum categoriePizza; 
 	
+
 	public static final int PRIX_MAX = 100;
 	public static final int PRIX_MIN = 1;
 	public static final int LONG_CODE = 3;
@@ -32,12 +35,13 @@ public class Pizza {
 	 * @param designation c'est le nom de la pizza
 	 * @param prix désigne le prix de la pizza
 	 */
-	public Pizza(String code, String designation, double prix) {
+	public Pizza(String code, String designation, double prix, CategoriePizzaEnum  categoriePizza) {
 		
 		this.id = count++;
 		this.code = code;
 		this.designation = designation;
 		this.prix = prix;
+		this.categoriePizza = categoriePizza; 
 	}
 	/**
 	 * Constructeur vide
@@ -101,10 +105,25 @@ public class Pizza {
 	public void setPrix(double prix) {
 		this.prix = prix;
 	}
+	/**
+	 * Retourne la categorie de la pizza
+	 * @return la categorie de la pizza
+	 */
+	public CategoriePizzaEnum getCategoriePizza() {
+		return categoriePizza;
+	}
+	
+	/**
+	 * Met à jour la categorie de la pizza
+	 * @param categoriePizza
+	 */
+	public void setCategoriePizza(CategoriePizzaEnum categoriePizza) {
+		this.categoriePizza = categoriePizza;
+	}
 	
 	
 	public String toString () {
-		return " "+this.code+" -> "+this.designation+" ("+this.prix+"€)";
+		return " "+this.code+" -> "+this.designation+" ("+this.prix+"€)"+" Catégorie : "+this.categoriePizza;
 	}
 	
 
@@ -112,6 +131,7 @@ public class Pizza {
 	public void dataController() throws StockageException {
 		
 		String message = "";
+		boolean categorieB = false;
 		
 		if( code == null|| code.trim().length() != LONG_CODE ) {
 			message += "Veuillez saisir un autre code avec 3 caractères svp. \r\n";
@@ -122,6 +142,21 @@ public class Pizza {
 		if(prix < PRIX_MIN || prix > PRIX_MAX) {
 			message += "Veuillez saisir un prix compris entre "+PRIX_MIN+" et "+PRIX_MAX+"\r\n";
 		}
+		/*for (CategoriePizzaEnum categoriePizza : CategoriePizzaEnum.) {
+			if (CategoriePizzaEnum.FROMAGE.equals(categoriePizza))
+				categorieB = true;
+			else if (CategoriePizzaEnum.POISSON.equals(categoriePizza))
+				categorieB = true; 
+			else if (CategoriePizzaEnum.VIANDE.equals(categoriePizza))
+				categorieB = true; 
+			else
+				categorieB = false; 
+				categoriePizza = CategoriePizzaEnum.AUTRE;
+				message += "catégorie par défaut. \r\n";
+		}*/
+		
+		
+		
 		 
 		if (message.trim().length() > 0) {
 			throw new StockageException(message);

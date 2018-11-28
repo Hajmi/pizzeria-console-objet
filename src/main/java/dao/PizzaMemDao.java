@@ -10,6 +10,7 @@ import fr.pizzeria.exception.DeletePizzaException;
 import fr.pizzeria.exception.SavePizzaException;
 import fr.pizzeria.exception.StockageException;
 import fr.pizzeria.exception.UpdatePizzaException;
+import fr.pizzeria.model.CategoriePizzaEnum;
 /**
  * 
  * @author Samir Benakcha
@@ -22,14 +23,14 @@ public class PizzaMemDao implements IPizzaDao{
 	 */
 	static List<Pizza> pizzas = new ArrayList<Pizza>();
 	{
-	pizzas.add(new Pizza("PEP", "Pépéroni", 12.50));
-	pizzas.add(new Pizza("REIN", "La Reine", 11.50));
-	pizzas.add(new Pizza("MAR", "Margherita", 14.00));
-	pizzas.add(new Pizza("FRO", "La 4 frommages", 12.00));
-	pizzas.add(new Pizza("CAN", "La cannibale", 12.50));
-	pizzas.add(new Pizza("SAV", "La savoyarde", 13.00));
-	pizzas.add(new Pizza("ORI", "L'orientale", 13.50));
-	pizzas.add(new Pizza("IND", "L'indienne", 14.00));
+	pizzas.add(new Pizza("PEP", "Pépéroni", 12.50, CategoriePizzaEnum.VIANDE));
+	pizzas.add(new Pizza("REIN", "La Reine", 11.50, CategoriePizzaEnum.POISSON));
+	pizzas.add(new Pizza("MAR", "Margherita", 14.00, CategoriePizzaEnum.FROMAGE));
+	pizzas.add(new Pizza("FRO", "La 4 frommages", 12.00, CategoriePizzaEnum.FROMAGE));
+	pizzas.add(new Pizza("CAN", "La cannibale", 12.50, CategoriePizzaEnum.VIANDE));
+	pizzas.add(new Pizza("SAV", "La savoyarde", 13.00, CategoriePizzaEnum.AUTRE));
+	pizzas.add(new Pizza("ORI", "L'orientale", 13.50, CategoriePizzaEnum.AUTRE));
+	pizzas.add(new Pizza("IND", "L'indienne", 14.00, CategoriePizzaEnum.VIANDE));
 	}
 	
 	public void afficheListe () {
