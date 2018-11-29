@@ -52,7 +52,7 @@ public class PizzeriaAdminConsoleApp {
 					System.out.println("Veuillez saisir le code : \r\n");
 					String codePizza = "";
 					String nomPizza = "";
-					double prixPizza = 0.0;
+					Double prixPizza = 0.0;
 					codePizza = sc.nextLine();
 					System.out.println("Veuillez saisir le nom : \r\n");
 					nomPizza = sc.nextLine();
@@ -101,7 +101,7 @@ public class PizzeriaAdminConsoleApp {
 					System.out.println("Veuillez saisir le nouveau  code : \r\n");
 					String newCodePizza = "";
 					String newNomPizza = "";
-					double newPrixPizza = 0.0;
+					Double newPrixPizza = 0.0;
 					newCodePizza = sc.nextLine();
 					System.out.println("Veuillez saisir le nouveau nom : \r\n");
 					newNomPizza = sc.nextLine();

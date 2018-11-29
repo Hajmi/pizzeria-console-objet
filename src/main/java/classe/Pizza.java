@@ -18,13 +18,13 @@ public class Pizza {
 	public int id;
 	public String code;
 	public String designation;
-	public double prix;
+	public Double prix;
 	public static int count = 0;
 	public CategoriePizzaEnum categoriePizza; 
 	
 
-	public static final int PRIX_MAX = 100;
-	public static final int PRIX_MIN = 1;
+	public static final Double PRIX_MAX = 100.0;
+	public static final Double PRIX_MIN = 5.0;
 	public static final int LONG_CODE = 3;
 	public static final int MAX_NAME = 15;
 	
@@ -35,7 +35,7 @@ public class Pizza {
 	 * @param designation c'est le nom de la pizza
 	 * @param prix désigne le prix de la pizza
 	 */
-	public Pizza(String code, String designation, double prix, CategoriePizzaEnum  categoriePizza) {
+	public Pizza(String code, String designation, Double prix, CategoriePizzaEnum  categoriePizza) {
 		
 		this.id = count++;
 		this.code = code;
@@ -75,7 +75,7 @@ public class Pizza {
 	 * @param code est le code de la pizza
 	 */
 	public void setCode(String code) {
-		this.code = code.toUpperCase();
+		this.code = code;
 	}
 	/**
 	 * Retourne la designation de la pizza
@@ -95,14 +95,14 @@ public class Pizza {
 	 * Retourne le prix de la pizza
 	 * @return retourne le prix de la pizza
 	 */
-	public double getPrix() {
+	public Double getPrix() {
 		return prix;
 	}
 	/**
 	 * Met à jour le prix de la pizza
 	 * @param prix est le prix de la pizza
 	 */
-	public void setPrix(double prix) {
+	public void setPrix(Double prix) {
 		this.prix = prix;
 	}
 	/**
@@ -137,27 +137,25 @@ public class Pizza {
 			message += "Veuillez saisir un autre code avec 3 caractères svp. \r\n";
 		}
 		if(designation.trim().length() < 1 || designation == null || designation.trim().length() > MAX_NAME) {
-			message += "Veuillez saisir un autre nom, 20 charactères max. \r\n";
+			message += "Veuillez saisir un autre nom avec 15 charactères max. \r\n";
 		}
 		if(prix < PRIX_MIN || prix > PRIX_MAX) {
 			message += "Veuillez saisir un prix compris entre "+PRIX_MIN+" et "+PRIX_MAX+"\r\n";
 		}
-		/*for (CategoriePizzaEnum categoriePizza : CategoriePizzaEnum.) {
-			if (CategoriePizzaEnum.FROMAGE.equals(categoriePizza))
-				categorieB = true;
-			else if (CategoriePizzaEnum.POISSON.equals(categoriePizza))
+		
+		if (CategoriePizzaEnum.AUTRE.equals(categoriePizza))
+			categorieB = true;
+		else if (CategoriePizzaEnum.POISSON.equals(categoriePizza))
+			categorieB = true; 
+		else if (CategoriePizzaEnum.VIANDE.equals(categoriePizza))
 				categorieB = true; 
-			else if (CategoriePizzaEnum.VIANDE.equals(categoriePizza))
-				categorieB = true; 
-			else
+		else {
 				categorieB = false; 
 				categoriePizza = CategoriePizzaEnum.AUTRE;
 				message += "catégorie par défaut. \r\n";
-		}*/
+		}
 		
-		
-		
-		 
+			 
 		if (message.trim().length() > 0) {
 			throw new StockageException(message);
 		}

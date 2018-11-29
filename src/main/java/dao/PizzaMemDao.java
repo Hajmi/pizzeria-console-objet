@@ -1,9 +1,8 @@
 package dao;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Comparator;
+import java.util.List;
 
 import classe.Pizza;
 import fr.pizzeria.exception.DeletePizzaException;
@@ -63,25 +62,37 @@ public class PizzaMemDao implements IPizzaDao{
 		}
 		
 		if (isPizzaExists(codePizza)==true && codeB == true) {
-			Pizza pizzaUpdate = findPizzaByCode(codePizza);
+			Pizza pizzaUpdate = null;
+			try {
+				pizzaUpdate = findPizzaByCode(codePizza);
+			} catch (StockageException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			pizzaUpdate.setCode(pizza.getCode());
 			pizzaUpdate.setDesignation(pizza.getDesignation());
 			pizzaUpdate.setPrix(pizza.getPrix());
 			System.out.println("Mise à jour réussie");
 
 		}
+		else 
+		{
+			String msg = "MODIFICATION DE LA PIZZA => " + codePizza + "\r\n";
+			msg += "La pizza à modifier n'existe pas \r\n";
+			throw new UpdatePizzaException(msg);
+		}
 	}
 	/**
 	 * Trouver une pizza en passant par son code
 	 */
-	public Pizza findPizzaByCode(String codePizza) {
+	public Pizza findPizzaByCode(String codePizza) throws StockageException  {
 		// TODO Auto-generated method stub
 		for (Pizza pizza : pizzas) {
 			if(pizza.getCode().equals(codePizza.toUpperCase())) {
 				return pizza;
 			}
 		}
-		return null;
+		throw new StockageException("Cette pizza n'existe pas");
 	}
 	/**
 	 * Existence d'une pizza en passant par son code
@@ -132,11 +143,16 @@ public class PizzaMemDao implements IPizzaDao{
 		boolean codeB = isPizzaExists(codePizza);
 		
 		if(codeB) {
-			pizzas.remove(findPizzaByCode(codePizza));
+			try {
+				pizzas.remove(findPizzaByCode(codePizza));
+			} catch (StockageException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			System.out.println("Pizza supprimée");
 		}
 		else {
-			throw new DeletePizzaException("cette pizza n'existe pas\r\n");//
+			throw new DeletePizzaException("cette pizza n'existe pas");//
 		}
 	}
 	/**
